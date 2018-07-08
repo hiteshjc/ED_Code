@@ -1,0 +1,150 @@
+
+Diagonalizing XXZ Hamiltonian
+ J1 = 1
+ J2 = 0
+ Jz = lambda = 0
+ Ch = 0
+ # of sites/spins = 8
+ Tolerance = 1e-13
+
+
+--------------------------------------------------------------------
+
+Total size of all states/rep loc vector 70
+ SECTOR : 0	(0,0)	70
+Time to construct pStates	 0 minutes
+ ARPACK PARAMETERS 
+ ncv = 16
+ nev = 4
+ n = 70
+ ldv = 70
+ n_it = 4
+----------------------
+
+ Wall clock for each iteration of znaupd 0.000540666 minutes
+ Time for H_v 7.06156e-05 minutes
+ Wall clock for each iteration of znaupd 3.8147e-07 minutes
+ Time for H_v 2.46366e-07 minutes
+ Wall clock for each iteration of znaupd 1.98682e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 2.02656e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 3.49681e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 4.17233e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 3.49681e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 3.69549e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 3.8147e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 4.17233e-07 minutes
+ Time for H_v 1.62919e-07 minutes
+ Wall clock for each iteration of znaupd 2.82129e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 4.49022e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 3.01997e-07 minutes
+ Time for H_v 1.98682e-07 minutes
+ Wall clock for each iteration of znaupd 6.15915e-07 minutes
+ Time for H_v 2.5034e-07 minutes
+ Wall clock for each iteration of znaupd 3.13918e-07 minutes
+ Time for H_v 3.49681e-07 minutes
+ Wall clock for each iteration of znaupd 5.48363e-07 minutes
+ Time for H_v 1.62919e-07 minutes
+ Wall clock for each iteration of znaupd 0.000283651 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 3.97364e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 3.97364e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 2.70208e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 4.64916e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 4.80811e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 4.84784e-07 minutes
+ Time for H_v 1.98682e-07 minutes
+ Wall clock for each iteration of znaupd 5.32468e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 5.52336e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 7.63337e-06 minutes
+ Time for H_v 1.62919e-07 minutes
+ Wall clock for each iteration of znaupd 3.85443e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 3.97364e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 4.17233e-07 minutes
+ Time for H_v 1.86761e-07 minutes
+ Wall clock for each iteration of znaupd 4.33127e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 4.64916e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 4.84784e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 5.00679e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 5.32468e-07 minutes
+ Time for H_v 1.86761e-07 minutes
+ Wall clock for each iteration of znaupd 5.48363e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 6.93003e-06 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 3.97364e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 4.17233e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 4.33127e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 4.6889e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 4.64916e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 5.00679e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 5.16574e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 5.52336e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 5.93265e-06 minutes
+ Time for H_v 1.86761e-07 minutes
+ Wall clock for each iteration of znaupd 4.01338e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 4.17233e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 4.33127e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 4.49022e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 4.6889e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 4.80811e-07 minutes
+ Time for H_v 1.66893e-07 minutes
+ Wall clock for each iteration of znaupd 3.13918e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 5.52336e-07 minutes
+ Time for H_v 1.82788e-07 minutes
+ Wall clock for each iteration of znaupd 3.71536e-06 minutes
+
+ARPACK iterations
+# iterations (# of H*v calls)	53
+Wall Clock time H*v		9.11872e-05 minutes
+
+Max iter for Arnoldi		5
+Wall Clock time znapud		0.000869119 minutes
+
+
+ Wall Clock for ARPACK	0.000981665 minutes
+
+Eigenvalues
+(-1.847759065,-2.058413947e-17)	(-1.847759065,-3.992669944e-17)	(-1.847759065,-2.992987086e-17)	(-2.61312593,2.220560859e-17)	
+
+Energies		Energies/site		Sz	kx	ky	Jz	J2
+
+-2.613125929752756	-0.326640741219095	0.000	0.000	0.000	0.000	0.000
+-1.847759065022578	-0.230969883127822	0.000	0.000	0.000	0.000	0.000
+-1.847759065022577	-0.230969883127822	0.000	0.000	0.000	0.000	0.000
+-1.847759065022575	-0.230969883127822	0.000	0.000	0.000	0.000	0.000
