@@ -1,8 +1,8 @@
 
 #include "global.h"			// Header file with Matrix Class
 #include "read_input_file.h"		// Functions that reads in the input parameters from input file
-#include "ARPACK_full_eigs.h"		// Functions for ARPACK computation for eigs for all sectors
-#include "ARPACK_sector.h"		// Functions for computing eigs and eigvecs for specific sectors
+//#include "ARPACK_full_eigs.h"		// Functions for ARPACK computation for eigs for all sectors
+//#include "ARPACK_sector.h"		// Functions for computing eigs and eigvecs for specific sectors
 #include "Lanczos_sector.h"
 #include "idsClass.h"
 
@@ -115,12 +115,12 @@ int main(int argc, char *argv[])
 	// Computes the eigenvalues and eigenvectors of a specific sector //
 	if(pSector)
 	{
-		if(Use_ARPACK)
+		/*if(Use_ARPACK)
 		{
 			sector_eigs_eigvecs(	skx, sky, sSz, n_spins, Jz, J2, adj_list, Ch, ch_list, ChCh, chch_list, T1, T2, Num_Eigenvalues,
 						Find_Vectors, Unwrap_pVector, Vector_File_Path, tol, maxiter, outfile);
 		}
-		else
+		else*/
 		{
 			if (dim==2) 
 			{

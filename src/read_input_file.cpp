@@ -230,7 +230,7 @@ void ED_2D_Lattice_Geometry(	string input_filename,
 						linestream >> op_b >> x >> comma >> y >> cl_b;
 
 						coordinates alist; 
-						alist.x = x; alist.y = y; alist.J = J2;
+						alist.x = x; alist.y = y; alist.J = J2;alist.expphase = 1.0;
 						adj_list.push_back(alist);	    
 					}
 					else if (r_tmp == ']')

@@ -78,6 +78,58 @@ double unif_rnd()
 	return rand()/double(RAND_MAX);
 }
 
+void exact_evecs(	vector<int64_t> &pblock_states,
+			vector<double> &Norm,
+			vector<double> &Norm_inv,
+			vector<int64_t> &rep_loc, 
+			vector< complex<double> > &state_ph,
+			vector<complex<double> > &eigs,
+			vector< vector< complex<double> > > &previous_evecs,
+			bool find_ev,
+			double &lambda,
+			int &n_spins,
+			double &px, 
+			double &py,
+			int &n_ones,
+			int64_t &n_p,
+			vector<coordinates> &adj_list,
+			double &Ch,
+			vector<triangles> &ch_list,
+			double &ChCh,
+			vector<bowties> &chch_list,
+			vector<int> &T1,
+			vector<int> &T2,
+			int n_ev,
+			double tol,
+			int iterations,
+			int ncycles,
+			vector<int64_t> &Ia,
+			vector<int64_t> &Ib,
+			int bits_right,
+			ofstream &outfile)
+{
+	bool ipr = true;
+	int64_t size = pblock_states.size();
+	vector< double > 			reigs(size);//v_o(size);
+	vector< complex<double> > 		v_p(size);//v_o(size);
+	zMatrix					H_mat,H_eigenvecs;
+	makeH(pblock_states, Norm, Norm_inv, rep_loc, state_ph, lambda, adj_list, Ch, ch_list, ChCh, chch_list, n_spins, Ia, Ib, bits_right, T1, T2, px, py, outfile, H_mat);
+	zMatrix_Diagonalize_Hermitian(H_mat, reigs, H_eigenvecs);
+	eigs.clear(); for (int b=0;b<reigs.size();b++) eigs.push_back(reigs[b]);
+		
+	for (int i=0;i<size;i++)
+	{		
+		for (int k=0;k<size;k++)
+		{
+			v_p[k]=H_eigenvecs(k,i);
+		}
+		previous_evecs.push_back(v_p);
+	}
+
+	outfile << "\n\n--------------------------------------------------\n";
+	outfile << "\n EXACT SUMMARY \n" << endl;
+}
+
 void lanczos_evecs(	vector<int64_t> &pblock_states,
 			vector<double> &Norm,
 			vector<double> &Norm_inv,

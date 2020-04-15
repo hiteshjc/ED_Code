@@ -704,14 +704,24 @@ void pConstruct_States(	vector<int64_t> &v_sz,
 // Set up Lin Tables
 // Function sets up default indices for Ia
 // Labels for Ib will be detrmined below in the for loop
+        outfile.flush();
+        outfile<<"Before Lin"<<endl;	
+        outfile.flush();
 	Lin_Tables(Ia, Ib, half_sites, outfile);
+        outfile.flush();
+        outfile<<"After Lin"<<endl;	
+        outfile.flush();
 // Mask for extracting bits from one half of int64_t integer
 	bits_right = pow(2, half_sites) - 1;
 
 
+        outfile<<"Before constrained dets"<<endl;	
+        outfile.flush();
 	constrained_dets(n_sites, num_ones, all_states);
+        outfile<<"After constrained dets"<<endl;	
+        outfile.flush();
 
-	//#pragma omp parallel for
+	#pragma omp parallel for
 	for( i = 0; i < num_configs; i++)
 	{ 
 		int64_t tmp_id = all_states[i];

@@ -1,6 +1,17 @@
 
 #include "Lanczos_sector.h"
 
+template <class T>
+std::string to_string (T const &t)
+{
+    std::stringstream ss;
+    ss << t;
+    return ss.str();
+}
+template std::string to_string<int>(int const &);
+template std::string  to_string<double>(double const &);
+
+
 void sector_lanczos(	int &kx,
 			int &ky,
 			double &cSz,
@@ -24,10 +35,15 @@ void sector_lanczos(	int &kx,
 			ofstream &outfile)
 {
 
-	int n_ones = n_spins/2;
+	/*int n_ones = n_spins/2;
 	
 	for(double i = 0.0; i < cSz; i += 1)
-	{	n_ones++;} 
+	{	n_ones++;} */
+
+	int n_ones;
+
+        if (cSz>=0) n_ones=int(cSz + n_spins/2+1.0e-6);
+        if (cSz<0) n_ones=int(cSz + n_spins/2+1.0e-6);
 
 	int L1 = 0, L2 = 0;
 	LxLy(L1, L2, T1, T2);
@@ -52,8 +68,10 @@ void sector_lanczos(	int &kx,
 	outfile << "\n--------------------------------------------------------------------\n"; 
 	double t_states = wall_clock();
 
+        outfile.flush();
 	pConstruct_States(	pblock_states, norm, norm_inv, T1, T2, n_ones, px, py, n_p, 
 				rep_loc, state_ph, Ia, Ib, bits_right, outfile);
+        outfile.flush();
 /*
 	outfile << endl << endl;
 	for(int ii = 0; ii < pblock_states.size(); ii++)
@@ -84,11 +102,22 @@ void sector_lanczos(	int &kx,
 
 	double lanczos_time = wall_clock();
 
-	lanczos_evecs(	pblock_states, norm, norm_inv, rep_loc, state_ph,
+        if (n_p>10000)
+	{
+		lanczos_evecs(	pblock_states, norm, norm_inv, rep_loc, state_ph,
 			pblock_eigs, pblock_eigvecs, find_ev,
 			lambda, n_spins, px, py, n_ones, n_p,
 			adj_list, Ch, ch_list, ChCh, chch_list, T1, T2, n_sec_ev, tol, iterations, ncycles,
 			Ia, Ib, bits_right, outfile);
+	}
+        else
+	{
+		exact_evecs(	pblock_states, norm, norm_inv, rep_loc, state_ph,
+			pblock_eigs, pblock_eigvecs, find_ev,
+			lambda, n_spins, px, py, n_ones, n_p,
+			adj_list, Ch, ch_list, ChCh, chch_list, T1, T2, n_sec_ev, tol, iterations, ncycles,
+			Ia, Ib, bits_right, outfile);
+	}
 	
 	outfile << "-----------------------------------------------------------" << endl;
 	outfile << "-----------------------------------------------------------" << endl;
@@ -110,7 +139,7 @@ void sector_lanczos(	int &kx,
 		
 		for(int iib = 0; iib < min(n_sec_ev,int(pblock_eigs.size())); iib++)
 		{
-			int t_tmp_int = iib + 1 + (int)'0';
+			/*int t_tmp_int = iib + 1 + (int)'0';
 			char t_tmp = (char)t_tmp_int;
 
 			string filepath_tmp;
@@ -118,7 +147,14 @@ void sector_lanczos(	int &kx,
 			if(unwrap_peigvec)
 				filepath_tmp = filepath_EV + "_EV" + t_tmp + ".txt";		
 			else
-				filepath_tmp = filepath_EV + "_pEV" + t_tmp + ".txt";
+				filepath_tmp = filepath_EV + "_pEV" + t_tmp + ".txt";*/
+	
+			string filepath_tmp;
+
+			if(unwrap_peigvec)
+				filepath_tmp = filepath_EV + "_EV" + to_string(iib) + ".txt";		
+			else
+				filepath_tmp = filepath_EV + "_pEV" + to_string(iib) + ".txt";
 	
 			ofstream outfile_vecs(filepath_tmp.c_str());
 			outfile_vecs << "\n Eigenvector for state \n";
@@ -266,6 +302,8 @@ void sector_lanczos(	int &kx,
 		outfile << fixed << setprecision(15) << real(pblock_eigs[i]) << "\t" << real(pblock_eigs[i])/double(n_spins) <<"\t" << setprecision (3) << Sz << "\t" << px << "\t" << py << "\t" << pz << "\t" << lambda << "\t" << J2 << "\n";  	
 
 	outfile.flush();
+	outfile<<" find_ev = "<< find_ev << endl;
+	outfile.flush();
 	
 	if(find_ev)
 	{	
@@ -278,10 +316,16 @@ void sector_lanczos(	int &kx,
 
 			string filepath_tmp;
 
-			if(unwrap_peigvec)
+			/*if(unwrap_peigvec)
 				filepath_tmp = filepath_EV + "_EV" + t_tmp + ".txt";		
 			else
-				filepath_tmp = filepath_EV + "_pEV" + t_tmp + ".txt";
+				filepath_tmp = filepath_EV + "_pEV" + t_tmp + ".txt";*/
+			
+			if(unwrap_peigvec)
+				filepath_tmp = filepath_EV + "_EV" + to_string(iib) + ".txt";		
+			else
+				filepath_tmp = filepath_EV + "_pEV" + to_string(iib) + ".txt";
+	
 	
 			ofstream outfile_vecs(filepath_tmp.c_str());
 			outfile_vecs << "\n Eigenvector for state \n";
