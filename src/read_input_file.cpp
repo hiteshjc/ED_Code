@@ -278,11 +278,11 @@ void ED_2D_Lattice_Geometry(	string input_filename,
 				read.clear();
 			}
 			
-			outfile<<" Triangles "<<endl;
+			/*outfile<<" Triangles "<<endl;
 			for (int m=0;m<tri_list.size();m++)
 			{
 				outfile<< tri_list[m].i <<"  "<< tri_list[m].j <<"  "<< tri_list[m].k <<"  "<<endl;
-			}	
+			}*/	
 			chch_list.clear();	
 			for (int m=0;m<tri_list.size();m++)
 			{
@@ -606,11 +606,11 @@ void ED_3D_Lattice_Geometry(	string input_filename,
 				read.clear();
 			}
 			
-			outfile<<" Triangles (3D)"<<endl;
+			/*outfile<<" Triangles (3D)"<<endl;
 			for (int m=0;m<tri_list.size();m++)
 			{
 				outfile<< tri_list[m].i <<"  "<< tri_list[m].j <<"  "<< tri_list[m].k <<"  "<<endl;
-			}	
+			}*/	
 			chch_list.clear();	
 			for (int m=0;m<tri_list.size();m++)
 			{
