@@ -1,0 +1,15 @@
+Additions to code
+--This line, and those below, will be ignored--
+
+M    idsClass.cpp
+AM   pchirality_chch.cpp
+AM   pchirality_special.cpp
+AM   pchirality_special.cpp.bk
+AM   pdm_chiral2_Sz.cpp
+AM   pdm_chiral_Sz.cpp
+AM   pmes_chiral.cpp
+M    pmes_readfile.h
+M    read_inputfile.cpp
+M    read_inputfile.h
+M    unwrap_pstate.cpp
+M    unwrap_pstate.h

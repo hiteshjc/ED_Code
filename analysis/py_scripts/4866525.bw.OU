@@ -1,0 +1,17 @@
+----------------------------------------
+Begin Torque Prologue on nid25427
+at Thu Jun  2 19:37:55 CDT 2016
+Job Id:			4866525.bw
+Username:		hiteshjc
+Group:			PRAC_jmp
+Job name:		job_dotprod_wf1_Jz_0.00000_J2_0.0_Ch_0.05_kx_0_ky_0_theta1_3.85_theta2_1.75_pEV2_wf2_Jz_0.00000_J2_0.0_Ch_0.05_kx_0_ky_0_theta1_3.491_theta2_1.75_pEV1
+Requested resources:	neednodes=1:ppn=32,nodes=1:ppn=32,walltime=01:00:00
+Queue:			high
+Account:		jpz
+End Torque Prologue:  0.043 elapsed
+----------------------------------------
+
+
+
+
+Application 39563105 resources: utime ~4333s, stime ~102s, Rss ~22111832, inblocks ~7088298, outblocks ~104545

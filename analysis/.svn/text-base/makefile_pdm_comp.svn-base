@@ -1,0 +1,32 @@
+CC=g++ -O3 -fopenmp 
+
+CFLAGS=-lblas -llapack -larpack
+
+OBJS=	./obj/pdm_comp.o \
+	./obj/Simple_Math_Func.o \
+	./obj/Matrix_Functions.o \
+	./obj/read_inputfile.o \
+	./obj/idsClass.o \
+	./obj/Basis_States.o \
+	./obj/Momentum_Basis.o \
+	./obj/Entropy.o \
+	./obj/global.o \
+	./obj/pClasses.o \
+	./obj/unwrap_pstate.o 	
+	
+
+EXECUTABLE=pdm_comp
+
+headers=./src/*.h
+
+dm: $(OBJS) $(headers)
+	$(CC) -o pdm_comp $(OBJS) $(CFLAGS) 
+
+$(OBJS): ./obj/%.o : ./src/%.cpp
+	$(CC) -o $@ -c $<
+
+#WallClock.o: ./src/WallClock.h
+
+clean:
+	rm -f $(OBJS) $(PROG)
+	rm -f $(EXECUTABLE)

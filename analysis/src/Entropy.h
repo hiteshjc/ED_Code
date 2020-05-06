@@ -1,0 +1,98 @@
+#ifndef GUARD_ENTROPY_H
+#define GUARD_ENTROPY_H
+
+#include "global.h"
+#include "matrix.h"
+#include "Basis_States.h"
+#include "Matrix_Functions.h"
+#include "Momentum_Basis.h"
+
+void add_density_matrices( 	complex<double> &c1,
+				complex<double> &c2, 
+				zMatrix &dm11,
+				zMatrix &dm12,
+				zMatrix &dm21,
+				zMatrix &dm22,
+				zMatrix &dmsum);
+
+void add_conj_density_matrices( complex<double> &c1,
+				complex<double> &c2, 
+				zMatrix &dm11,
+				zMatrix &dm12,
+				zMatrix &dm21,
+				zMatrix &dm22,
+				zMatrix &dmsum);
+
+
+void add_density_matrices(	complex<double> &c1,
+				complex<double> &c2,
+				complex<double> &c3,
+				zMatrix &dm11,
+				zMatrix &dm12,
+				zMatrix &dm13,
+				zMatrix &dm21,
+				zMatrix &dm22,
+				zMatrix &dm23,
+				zMatrix &dm31,
+				zMatrix &dm32,
+				zMatrix &dm33,
+				zMatrix &dmsum);
+
+
+void set_bits_zero_Cut(	int64_t &a,
+			vector<int> &Cut);
+
+
+int64_t set_bits_Cut(	int64_t big_string, 
+			int64_t &small_string,
+			vector<int> &Cut);
+
+
+int64_t findstate_psi(	int64_t &rep_id,
+			vector<ids> &psi);
+
+/*
+int64_t finstate_basis(	int64_t &rep_id,
+			vector<int64_t> &basis);
+*/
+
+void density_matrix(	zMatrix &dm,
+			vector< ids > &psi,
+			vector<int> &Cut);
+
+
+void density_matrixij(	zMatrix &dm,
+			vector< ids > &psi1,
+			vector< ids > &psi2,
+			vector<int> Cut);
+
+void density_matrixij_Sz(	zMatrix &dm,
+				vector< ids > &psi1,
+				vector< ids > &psi2,
+				vector<int> Cut,
+				int &n_sites,
+				int &n_ones,
+				ofstream &outfile);
+
+complex<double> Von_Neumann_Entropy_basee(	zMatrix &dm);
+
+complex<double> Renyi_Entropy_basee(	zMatrix &dm);
+
+complex<double> Von_Neumann_Entropy(	zMatrix &dm);
+
+complex<double> Renyi_Entropy(	zMatrix &dm);
+
+
+void entanglement_entropies(	vector<ids> &psi,
+				vector<int> &Cut,
+				ofstream &outfile);
+
+complex<double> VN_EE(	vector<ids> &psi,
+			vector<int> &Cut,
+			ofstream &outfile);
+
+
+
+#endif
+
+

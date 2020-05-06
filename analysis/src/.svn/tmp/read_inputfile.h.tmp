@@ -1,0 +1,107 @@
+#ifndef GUARD_READ_INPUT_FILE_H
+#define GUARD_READ_INPUT_FILE_H
+
+#include "global.h"
+#include "idsClass.h"
+#include "matrix.h"
+
+void read_ev_op(string &filein,
+		int &ev1,
+		int &ev2);
+
+void read_N_Sz(	string &filein,
+		int &N,
+		double &Sz);
+
+void read_dm_nones(	string &filein,
+			int &n_ones);
+
+void read_T1T2(	string &filein,
+		vector<int> &T1,
+		vector<int> &T2);
+
+void read_Cut(	std::string &filein,
+		std::vector<int> &Cut);
+
+void read_Rot(	string &filein,
+		vector<int> &rot);
+
+void read_Triangles(	string &filein,
+			vector<triangles> &tri);
+
+void read_ev1ev2(	string &filein,
+			string &fileEV1,
+			string &fileEV2);
+
+void read_pev1ev2(	string &filein,
+			string &filepEV1,
+			string &filepEV2);
+
+void read_pev1ev2ev3(	string &filein,
+			string &filepEV1,
+			string &filepEV2,
+			string &filepEV3);
+
+void read_pev1ev2ev3ev4(string &filein,
+			string &filepEV1,
+			string &filepEV2,
+			string &filepEV3,
+			string &filepEV4);
+
+
+void read_pEV(	string &filein,
+		string &filepEV);
+
+void read_mes(	string &filein,
+		int &alpha,
+		double &c_min,
+		double &interval,
+		double &delta);
+
+void read_pEV(	int64_t &n_p,
+		double &px,
+		double &py,
+		vector<int64_t> &pblock_states,
+		vector<double> &norm,
+		vector< complex <double> > &v_coeff, 
+		string &filepEV);
+
+void readEV(	vector<ids> &psi,
+		string &fileEV);
+
+void read_EVfile(	string &filein,
+			string &fileEV);
+
+
+void read_SSBB(	string &filein,
+		bool &SS,
+		bool &BB);
+
+void read_list(	string &filein,
+		vector<int> &list);
+
+
+void read_bonds(	string &filein,
+			vector<links> &bonds);
+
+void read_density_matrix(	zMatrix &dmat,
+				string &file_dm,
+				int &count);
+
+
+void read_dmmes3(	string &filein,
+			vector<int> &Cut,
+			string &file_dm11,
+			string &file_dm12,
+			string &file_dm13,
+			string &file_dm21,
+			string &file_dm22,
+			string &file_dm23,
+			string &file_dm31,
+			string &file_dm32,
+			string &file_dm33,
+			double &c_min,
+			double &interval,
+			double &delta);
+
+#endif

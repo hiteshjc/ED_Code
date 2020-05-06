@@ -1,0 +1,34 @@
+CC=g++ -O3 -fopenmp 
+
+CFLAGS=-lblas -llapack -larpack
+
+
+
+OBJS=	./obj/Unwrap_pEV.o \
+	./obj/read_inputfile.o \
+	./obj/unwrap_pstate.o \
+	./obj/Simple_Math_Func.o \
+	./obj/Matrix_Functions.o \
+	./obj/idsClass.o \
+	./obj/Basis_States.o \
+	./obj/Momentum_Basis.o \
+	./obj/global.o \
+	./obj/pClasses.o
+	
+	
+
+EXECUTABLE=unwrap
+
+headers=./src/*.h
+
+unwrap: $(OBJS) $(headers)
+	$(CC) -o unwrap $(OBJS) $(CFLAGS) 
+
+$(OBJS): ./obj/%.o : ./src/%.cpp
+	$(CC) -o $@ -c $<
+
+#WallClock.o: ./src/WallClock.h
+
+clean:
+	rm -f $(OBJS) $(PROG)
+	rm -f $(EXECUTABLE)

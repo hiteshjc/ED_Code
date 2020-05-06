@@ -1,0 +1,55 @@
+
+#include "global.h"
+#include "idsClass.h"
+#include "read_inputfile.h"
+#include "unwrap_pstate.h"
+
+int main(int argc, char *argv[])
+{
+	string filein, filepEV, fileout;
+
+	if (argc <= 1)
+	{
+		cout << "Usage: " << argv[0] << " <Filename>" << endl;
+		exit(1);
+	}
+
+	filein=argv[1];
+	fileout=argv[2];
+
+	ofstream outfile(fileout.c_str());
+
+	vector<int> T1, T2;
+	read_T1T2(filein, T1, T2);
+	read_pEV(filein, filepEV);
+
+	outfile << " Input pEV file: " << filepEV << endl;
+
+	outfile << "\nT1\t";	
+	for(int i = 0; i < T1.size(); i++)
+		outfile << T1[i] << " ";
+	outfile << endl;
+
+	outfile << "\nT2\t";	
+	for(int i = 0; i < T2.size(); i++)
+		outfile << T2[i] << " ";
+	outfile << endl;
+	vector<ids> psi;
+
+	double ts_uw = wall_clock();
+	read_n_unwrap(filein, filepEV, T1, T2, psi, outfile);
+	ts_uw = wall_clock() - ts_uw;
+
+	outfile << "\n Size of unwrapped vector " << psi.size() << endl;
+	outfile << "\n Total time for unwrapping p-vector  " << (ts_uw)/60.0 << " minutes\n";
+		
+	outfile << "\nEIGENVECTOR\n";
+	for(int64_t jb = 0; jb < psi.size(); jb++)
+	{
+		outfile << psi[jb].stateID << "\t" << fixed << setprecision(15) << psi[jb].coeff << endl;
+	}
+	
+	outfile.close();
+
+	return 0;
+}

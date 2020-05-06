@@ -1,0 +1,33 @@
+CC=g++ -O3 -fopenmp 
+
+CFLAGS=-lblas -llapack 
+#-larpack
+
+OBJS=	./obj/rot_dot.o \
+	./obj/global.o \
+	./obj/Simple_Math_Func.o \
+	./obj/Matrix_Functions.o \
+	./obj/idsClass.o \
+	./obj/pClasses.o \
+	./obj/Basis_States.o \
+	./obj/Momentum_Basis.o \
+	./obj/read_inputfile.o \
+	./obj/unwrap_pstate.o \
+	./obj/vector_operators.o
+
+
+EXECUTABLE=rot_dot
+
+headers=./src/*.h
+
+chirality: 	$(OBJS) $(headers)
+		$(CC) -o rot_dot $(OBJS) $(CFLAGS) 
+
+$(OBJS): ./obj/%.o : ./src/%.cpp
+	$(CC) -o $@ -c $<
+
+#WallClock.o: ./src/WallClock.h
+
+clean:
+	rm -f $(OBJS) $(PROG)
+	rm -f $(EXECUTABLE)

@@ -1,0 +1,115 @@
+import os
+import copy
+import cmath
+
+def get_dot(fname):
+	dotval="(0,0)"
+	fopen=True
+	try:
+		f=open(fname,'r')
+	except IOError:
+		fopen=False
+	
+	if (fopen==True):
+		for line in f:
+			line=line.strip()
+			if (line[0:28]=="Dot product of psi1 and psi2"):dotval=line.split(" ")[-1]
+		f.close()
+	return dotval
+
+
+xs=["-0.78539","-0.75","-0.70","-0.65","-0.60","-0.55","-0.50","-0.45","-0.40","-0.35","-0.30","-0.25","-0.20","-0.15","-0.10","-0.05","-0.02","0.00","0.02","0.05","0.10","0.15","0.20","0.25","0.30","0.35","0.40","0.45","0.50","0.55","0.60","0.65","0.70","0.75","0.78539"]
+#xs=["-0.78539","-0.75","-0.70","-0.65","-0.60","-0.55","-0.50","-0.45","-0.40","-0.35","-0.30","-0.25","-0.20","-0.15","-0.10","-0.05","-0.02","0.00","0.02","0.05","0.10","0.15","0.20","0.25","0.30","0.35","0.40","0.45","0.50","0.55","0.60","0.65","0.70","0.78539"]
+xsr=copy.deepcopy(xs)
+xsr.reverse()
+ys=["-0.78539","-0.75","-0.70","-0.65","-0.60","-0.55","-0.50","-0.45","-0.40","-0.35","-0.30","-0.25","-0.20","-0.15","-0.10","-0.05","-0.02","0.00","0.02","0.05","0.10","0.15","0.20","0.25","0.30","0.35","0.40","0.45","0.50","0.55","0.60","0.65","0.70","0.75","0.78539"]
+#ys=["-0.78539","-0.75","-0.70","-0.65","-0.60","-0.55","-0.50","-0.45","-0.40","-0.35","-0.30","-0.25","-0.20","-0.15","-0.10","-0.05","-0.02","0.00","0.02","0.05","0.10","0.15","0.20","0.25","0.30","0.35","0.40","0.45","0.50","0.55","0.60","0.65","0.70","0.78539"]
+ysr=copy.deepcopy(ys)
+ysr.reverse()
+
+ylow="-0.78539"
+yhigh="0.78539"
+xleft="-0.78539"
+xright="0.78539"
+
+trajectory_x1=[]
+trajectory_y1=[]
+trajectory_x2=[]
+trajectory_y2=[]
+
+for x in xs: trajectory_x1.append([x,ylow])
+for y in ys: trajectory_y1.append([xright,y])
+for x in xsr: trajectory_x2.append([x,yhigh])
+for y in ysr: trajectory_y2.append([xleft,y])
+
+trajectory=[]
+for t in trajectory_x1: trajectory.append(t)
+for t in trajectory_y1: trajectory.append(t)
+for t in trajectory_x2: trajectory.append(t)
+for t in trajectory_y2: trajectory.append(t)
+
+wf_trajectory=[]
+wf_pairs=[]
+for t in trajectory:
+	a1=t[0]
+	a2=t[1]
+	wf_trajectory.append("Jz_0.00_J2_0.0_Ch_0.0_kx_0_ky_0_a1_"+a1+"_a2_"+a2+"_pEV1")
+num_wfs=len(wf_trajectory)
+
+for i,wf in enumerate(wf_trajectory):
+	if (i!=num_wfs-1):
+		wf_1_name=wf_trajectory[i]
+		wf_2_name=wf_trajectory[i+1]
+	else:
+		wf_1_name=wf_trajectory[i]
+		wf_2_name=wf_trajectory[0]
+	if (wf_1_name!=wf_2_name):
+		wf_pairs.append([wf_1_name,wf_2_name])
+		#print wf_1_name,wf_2_name
+
+
+pi=3.14159
+totaldot=complex(1,0.0)
+int1=complex(0.0,0.0)
+for n,wf_pair in enumerate(wf_pairs):
+	wf_1_name=wf_pair[0]
+	wf_2_name=wf_pair[1]
+	fname="/scratch/sciteam/hiteshjc/chED/output_files/Kagome/48_XT8_4/Sz_16.0/Dot/dotprod_wf1_"+wf_1_name+"_wf2_"+wf_2_name+".txt"
+	r=fname.split("_")
+	#print r
+	a11=r[17]
+	a21=r[19]
+	a12=r[33]
+	a22=r[35]
+	dotval=get_dot(fname)
+	dotval=dotval.split(",")
+	dotval[0]=dotval[0].strip()
+	dotval[1]=dotval[1].strip()
+	#print dotval[0]
+	#print dotval[1]
+	a=float((dotval[0].split("("))[1])
+	b=float((dotval[1].split(")"))[0])
+	cdot=complex(a,b)
+	#print 
+	#print "(",a11,a21,") --> ","(",a12,a22,")",dotval,cdot
+	#print wf_1_name,wf_2_name,dotval,cdot
+	if (cdot!=complex(0,0)): totaldot=totaldot*cdot
+	else: print "Phase Unavailable" 
+	phase1=cmath.phase(cdot)
+	tt=cdot
+	int1=int1+(cdot-tt.conjugate())
+	if (phase1<0.0): phase1=(2*pi)+phase1
+	phase2=cmath.phase(totaldot)
+	if (phase2<0.0): phase2=(2*pi)+phase2
+	print "(",a11,a21,") --> ","(",a12,a22,")","Mag overlap =",abs(cdot),"Phase overlap =",phase1/(2*pi),"*2pi","Cumulative phase overlap =",phase2/(2*pi)
+	#print "(",a11,a21,") --> ","(",a12,a22,")","Mag overlap =",abs(cdot),"Integral present",int1
+	#,phase2/(2*pi)
+	#print
+#print "Cumulative Chern number/phase (div by 2pi included))", phase2/(2*pi)
+#print "Final int = ", (complex(0,1)/(4*pi))*int1
+#	inpathname="/home/hiteshjc/project-cse/big_in/Kagome/48/Sz_16.0"
+#	outpathname="/home/hiteshjc/project-cse/big_out/Kagome/48/Sz_16.0"
+#	input_name,job_name=make_input_and_job(1.0,16.0,executable,inpathname,outpathname,wf_1_name,wf_2_name)
+#	os.system("chmod 755 "+job_name)
+#	os.system("qsub "+job_name)
+

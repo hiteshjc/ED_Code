@@ -1,0 +1,593 @@
+#include "read_inputfile.h"
+
+template <class T>
+void read_Parameter(	string filein,
+			string sParameter,
+			T &Parameter)
+
+{
+	ifstream infile(filein.c_str() );
+	string line;
+	bool scan = true;
+
+	while( getline(infile, line) && scan )
+	{
+		string tmp;
+		char r;
+		istringstream linestream(line);
+
+		while(linestream >> r)
+		{
+			tmp.push_back(r);
+			if(tmp.compare(sParameter) == 0)
+			{
+				linestream >> Parameter; 
+				scan = false;
+			}
+		}	
+	}
+
+	infile.close();
+}
+
+template <class T>
+void read_list_of_sites(	string &filein,
+				string slist,
+				vector<T> &list)
+{	
+	ifstream infile(filein.c_str());
+	string line;
+	bool scan = true;
+
+	while( getline(infile, line) && scan )
+	{
+		string tmp;
+		char r;
+		istringstream linestream(line);
+
+		while(linestream >> r)
+		{
+			tmp.push_back(r);
+	
+			if(tmp.compare(slist) == 0)
+			{
+				char s;
+				while(linestream >> s)
+				{
+					if(s == '[' || s == ',')
+					{
+						T x; linestream >> x;
+						list.push_back(x);
+					}
+				}
+				tmp.clear();
+				scan = false;
+			}
+		}
+	}
+	infile.close();
+}
+
+void read_file_string(	string &filein,
+			string &key_string,
+			string &file_string)
+{	
+	ifstream infile(filein.c_str());
+	string line;
+	bool scan = true;
+
+	while( getline(infile, line) && scan )
+	{
+		string tmp;
+		char r;
+		istringstream linestream(line);
+
+		while(linestream >> r)
+		{
+			tmp.push_back(r);
+			if(tmp.compare(key_string) == 0)
+			{	
+				char s;
+				while(linestream >> s)
+					file_string.push_back(s); 
+				scan = false;
+			}
+		}
+	}
+	infile.close();
+}
+
+void read_N_Sz(	string &filein,
+		int &N,
+		double &Sz)
+{	
+	string sN("N=");
+	string sSz("Sz=");
+
+	read_Parameter(filein, sN, N);
+	read_Parameter(filein, sSz, Sz);
+}
+
+void read_dm_nones(	string &filein,
+			int &n_ones)
+{	
+	string sn_ones("n_ones=");
+	read_Parameter(filein, sn_ones, n_ones);
+}
+void read_T1T2(	string &filein,
+		vector<int> &T1,
+		vector<int> &T2)
+{	
+	string sT1("T1=");
+	string sT2("T2=");
+
+	read_list_of_sites(filein, sT1, T1);
+	read_list_of_sites(filein, sT2, T2);
+}
+
+
+void read_Cut(	std::string &filein,
+		std::vector<int> &Cut)
+{	
+	string sCut("Cut=");
+	read_list_of_sites(filein, sCut, Cut);
+}
+
+void read_Rot(	string &filein,
+		vector<int> &Rot)
+{	
+	string sRot("Rot=");
+	read_list_of_sites(filein, sRot, Rot);
+}
+
+
+void read_Triangles(	string &filein,
+			vector<triangles> &tri)
+{	
+	ifstream infile(filein.c_str());
+	string line;
+	string sTriangles("Triangles=");
+
+	while(getline(infile, line))
+	{
+		string tmp;
+		char r;
+		istringstream linestream(line);
+
+		while(linestream >> r)
+		{
+			tmp.push_back(r);
+
+			if(tmp.compare(sTriangles) == 0)
+			{
+				char s;
+				while(linestream >> s)
+				{
+					if(s == '[' || s == ',') 
+					{
+						char ob, comma, cb;
+						triangles tri_tmp; 
+						linestream >> ob >> tri_tmp.i >> comma >> tri_tmp.j >> comma >> tri_tmp.k >> cb;
+						tri.push_back(tri_tmp);
+					}
+				}
+				tmp.clear();
+			}
+		}
+	}
+}
+
+
+void read_ev1ev2(	string &filein,
+			string &fileEV1,
+			string &fileEV2)
+{	
+	string sEV1("EV1_file=");
+	string sEV2("EV2_file=");
+
+	read_file_string(filein, sEV1, fileEV1);
+	read_file_string(filein, sEV2, fileEV2);
+}
+
+void read_pev1ev2(	string &filein,
+			string &filepEV1,
+			string &filepEV2)
+{	
+	string spEV1("pEV1_file=");
+	string spEV2("pEV2_file=");
+
+	read_file_string(filein, spEV1, filepEV1);
+	read_file_string(filein, spEV2, filepEV2);
+}
+
+void read_EVfile(	string &filein,
+			string &fileEV)
+{	
+	ifstream infile(filein.c_str());
+	string line;
+	string EV("EV_file_path=");
+
+	read_file_string(filein, EV, fileEV);
+}
+
+void read_pEV(	string &filein,
+		string &filepEV)
+{	
+	ifstream infile(filein.c_str());
+	string line;
+	string sEV("pEV_file_path=");
+
+	read_file_string(filein, sEV, filepEV);
+}
+
+
+void read_mes(	string &filein,
+		int &alpha,
+		double &c_min,
+		double &interval,
+		double &delta)
+{	
+	ifstream infile(filein.c_str());
+	string line;
+	string sc_min("c_min=");	
+	string sinterval("interval=");	
+	string sdelta("delta=");
+	string salpha("alpha=");
+
+	read_Parameter(filein, salpha, alpha);
+	read_Parameter(filein, sc_min, c_min);
+	read_Parameter(filein, sinterval, interval);
+	read_Parameter(filein, sdelta, delta);
+
+}
+
+void read_pEV(	int64_t &n_p,
+		double &px,
+		double &py,
+		vector<int64_t> &pblock_states,
+		vector<double> &norm,
+		vector< complex <double> > &v_coeff, 
+		string &filepEV)
+{
+	ifstream infile(filepEV.c_str());
+	string line;
+	string p1p2("np 		 px 		py");	
+
+	while(getline(infile, line))
+	{
+		if(line.compare(p1p2) == 0)
+		{
+			infile >> n_p >> px >> py;
+			break;
+		}
+	}	
+	infile.close();
+		
+	string phead("pblock_states 		 Norm 			 v_coeff");
+	pblock_states.resize(n_p);
+	norm.resize(n_p);
+	v_coeff.resize(n_p);	
+
+	int64_t jb = 0;
+	ifstream infile1(filepEV.c_str());
+	while(getline(infile1, line))
+	{
+		complex<double> tmp_coeff;
+
+		if(line.compare(phead) == 0)
+		{
+			while(infile1 >> pblock_states[jb] >> norm[jb] >> tmp_coeff)
+			{	
+				v_coeff[jb] = tmp_coeff;
+				jb++;			
+			}
+		}
+	}
+	infile1.close();
+}
+
+void readEV(	vector<ids> &psi,
+		string &fileEV)
+{
+	ifstream infile(fileEV.c_str());
+	string line;
+	string eigenvector("EIGENVECTOR");
+
+	while(getline(infile, line))
+	{
+		if(line.compare(eigenvector) == 0)
+		{
+			ids tmp;
+			while(infile >> tmp.stateID >> tmp.coeff)
+			{	psi.push_back(tmp);}
+		}
+
+	}
+
+	infile.close();
+}
+
+
+
+void read_SSBB(	string &filein,
+		bool &SS,
+		bool &BB)
+{	
+	ifstream infile(filein.c_str());
+	string line;
+	string sSS("SS=");
+	string sBB("BB=");
+
+	while(getline(infile, line))
+	{
+		string tmp;
+		char r;
+		istringstream linestream(line);
+
+		while(linestream >> r)
+		{
+			tmp.push_back(r);
+		
+			if(tmp.compare(sSS) == 0)
+				linestream >> SS; 
+			if(tmp.compare(sBB) == 0)
+				linestream >> BB; 
+		}
+	}
+
+	infile.close();
+
+}
+
+void read_list(	string &filein,
+		vector<int> &list)
+{	
+	ifstream infile(filein.c_str());
+	string line;
+	string slist("list=");
+
+	while(getline(infile, line))
+	{
+		string tmp;
+		char r;
+		istringstream linestream(line);
+
+		while(linestream >> r)
+		{
+			tmp.push_back(r);
+
+			if(tmp.compare(slist) == 0)
+			{
+				char s;
+				while(linestream >> s)
+				{
+					if(s == '[' || s == ',') 
+					{
+						int tmp;
+						linestream >> tmp;
+						list.push_back(tmp);
+					}
+				}
+				tmp.clear();
+			}
+		
+		}
+	}
+
+
+	infile.close();
+}
+
+void read_bonds(	string &filein,
+			vector<links> &bonds)
+{	
+	ifstream infile(filein.c_str());
+	string line;
+	string sbonds("bonds=");
+
+	while(getline(infile, line))
+	{
+		string tmp;
+		char r;
+		istringstream linestream(line);
+
+		while(linestream >> r)
+		{
+			tmp.push_back(r);
+
+			if(tmp.compare(sbonds) == 0)
+			{
+				char r_tmp;
+				while(linestream >> r_tmp)
+				{
+					if(r_tmp == '[' || r_tmp == ',')
+					{
+						char op_b, comma, cl_b;
+						int x, y;
+						linestream >> op_b >> x >> comma >> y >> cl_b;
+
+						links tmp_bond;  
+						tmp_bond.x = x; tmp_bond.y = y; 
+						bonds.push_back(tmp_bond);	    
+					}
+					else if (r_tmp == ']')
+					break;
+				}
+				tmp.clear();
+			}							
+		}
+	}
+}
+
+void read_density_matrix(	zMatrix &dmat,
+				string &file_dm,
+				int &count)
+{
+	ifstream infile(file_dm.c_str());
+	string line;
+	string sdm("DENSITY_MATRIX");
+
+	count = 0;
+	while(getline(infile, line))
+	{
+		if(line.compare(sdm) == 0)
+		{
+			for (int64_t i = 0; i < dmat.NRows(); i++)
+				for(int64_t j = 0; j < dmat.NCols(); j++)
+				{
+					complex<double> tmp;
+					infile >> tmp;
+					if (abs(real( tmp )) > 0.0 || abs(imag( tmp )) > 0.0 )
+							count++;
+					 dmat(i,j) = tmp;
+				}
+		}
+	
+	}
+
+	infile.close();
+}
+
+void read_dmmes3(	string &filein,
+			vector<int> &Cut,
+			string &file_dm11,
+			string &file_dm12,
+			string &file_dm13,
+			string &file_dm21,
+			string &file_dm22,
+			string &file_dm23,
+			string &file_dm31,
+			string &file_dm32,
+			string &file_dm33,
+			double &c_min,
+			double &interval,
+			double &delta)
+{	
+	ifstream infile(filein.c_str());
+	string line;
+	string sCut("Cut=");
+	string sdm11("dm11_file=");	
+	string sdm12("dm12_file=");
+	string sdm13("dm13_file=");
+	string sdm21("dm21_file=");
+	string sdm22("dm22_file=");
+	string sdm23("dm23_file=");	
+	string sdm31("dm31_file=");
+	string sdm32("dm32_file=");
+	string sdm33("dm33_file=");
+	string sc_min("c_min=");	
+	string sinterval("interval=");	
+	string sdelta("delta=");
+
+	while(getline(infile, line))
+	{
+		string tmp;
+		char r;
+		istringstream linestream(line);
+
+		while(linestream >> r)
+		{
+			tmp.push_back(r);
+
+			if(tmp.compare(sCut) == 0)
+			{
+				char s;
+				while(linestream >> s)
+				{
+					if(s == '[' || s == ',')
+					{
+						int x; linestream >> x;
+						Cut.push_back(x);
+					}
+				}
+				tmp.clear();
+			}
+
+
+			if(tmp.compare(sdm11) == 0)
+			{	
+				char s;
+				while(linestream >> s)
+					file_dm11.push_back(s); 
+			}
+			
+
+			if(tmp.compare(sdm12) == 0)
+			{	
+				char s;
+				while(linestream >> s)
+					file_dm12.push_back(s); 
+			}
+
+			if(tmp.compare(sdm13) == 0)
+			{	
+				char s;
+				while(linestream >> s)
+					file_dm13.push_back(s); 
+			}
+
+			if(tmp.compare(sdm21) == 0)
+			{	
+				char s;
+				while(linestream >> s)
+					file_dm21.push_back(s); 
+			}
+
+			if(tmp.compare(sdm22) == 0)
+			{	
+				char s;
+				while(linestream >> s)
+					file_dm22.push_back(s); 
+			}
+			
+
+			if(tmp.compare(sdm23) == 0)
+			{	
+				char s;
+				while(linestream >> s)
+					file_dm23.push_back(s); 
+			}
+
+			if(tmp.compare(sdm31) == 0)
+			{	
+				char s;
+				while(linestream >> s)
+					file_dm31.push_back(s); 
+			}
+
+			if(tmp.compare(sdm32) == 0)
+			{	
+				char s;
+				while(linestream >> s)
+					file_dm32.push_back(s); 
+			}
+	
+			if(tmp.compare(sdm33) == 0)
+			{	
+				char s;
+				while(linestream >> s)
+					file_dm33.push_back(s); 
+			}
+
+			if(tmp.compare(sc_min) == 0)
+			{	
+				linestream >> c_min; 
+			}
+
+			if(tmp.compare(sinterval) == 0)
+			{	
+				linestream >> interval; 
+			}
+
+			if(tmp.compare(sdelta) == 0)
+			{	
+				linestream >> delta; 
+			}
+		}
+	}
+
+
+
+}
+
+

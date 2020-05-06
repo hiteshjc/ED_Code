@@ -1,0 +1,105 @@
+
+#include "global.h"
+#include "idsClass.h"
+#include "Entropy.h"
+#include "Momentum_Basis.h"
+#include "read_inputfile.h"
+#include "unwrap_pstate.h"
+
+
+int main(int argc, char *argv[])
+{
+	string filein, filepEV1, filepEV2, fileout;
+
+	if (argc <= 1)
+	{
+		cout << "Usage: " << argv[0] << " <Filename>" << endl;
+		exit(1);
+	}
+
+	filein=argv[1];
+	fileout=argv[2];
+
+	vector<int> Cut, T1, T2;
+	int N; double Sz; 
+	int n_ones;
+
+	read_Cut( filein, Cut);
+	read_dm_nones(filein, n_ones);
+	read_pev1ev2( filein, filepEV1, filepEV2);
+	read_T1T2(filein, T1, T2);
+	read_N_Sz(filein, N, Sz);
+
+	int unwrap_nones = int(2*Sz);
+	unwrap_nones = (unwrap_nones + N)/2;
+
+
+	ofstream outfile(fileout.c_str());
+
+	outfile << " File path pEV1 = " << filepEV1 << endl;
+	outfile << " File path pEV2 = " << filepEV2 << endl << endl;
+
+	outfile << " Sites N = " << N << endl;
+	outfile << " Sector Sz = " << Sz << endl;
+	outfile << " Unwrap_nones = " << unwrap_nones << endl;
+
+	outfile << "\nCUT\t";	
+	for(int i = 0; i < Cut.size(); i++)
+		outfile << Cut[i] << " ";
+	outfile << endl;
+
+	outfile << "\nT1 = ";
+	for(int i = 0; i < T1.size(); i++)
+		outfile << T1[i] << " ";
+
+	outfile << "\nT2 = ";	
+	for(int i = 0; i < T2.size(); i++)
+		outfile << T2[i] << " ";
+	outfile << endl << endl;	
+
+
+	double t_unwrap = wall_clock();
+		
+	vector<ids> psi1, psi2;
+	read_n_unwrap(filein, filepEV1, T1, T2, psi1, outfile);
+	read_n_unwrap(filein, filepEV2, T1, T2, psi2, outfile);
+	
+	t_unwrap = wall_clock() - t_unwrap;
+	outfile << "Time to unwrap p-states = " << t_unwrap/(60.0) << " minutes" << endl; 
+	outfile << "\n Size of unwrapped EV1: " << psi1.size() << endl;
+	outfile << " Size of unwrapped EV2: " << psi2.size() << endl << endl;
+
+	if(psi1.size() != psi2.size())
+		outfile << "\n ERROR IN UNWRAPPING VECTORS...SIZES DON'T MATCH \n" << endl;
+
+	double t_dm = wall_clock();
+	int n_sites = Cut.size();
+
+//	for(int n_ones = 0; n_ones <= n_sites; n_ones++)
+//	{
+		int64_t n_dm = n_choose_k(n_sites, n_ones);
+		outfile << "Num states = " << n_dm << endl;
+		outfile << "Num_ones = " << n_ones << endl << endl;
+		
+		zMatrix denm(n_dm, n_dm, 0.0);
+		density_matrixij_Sz(denm, psi1, psi2, Cut, n_sites, n_ones, outfile);
+		t_dm = wall_clock()-t_dm;
+		outfile << "Time to construct density matrices : " << (t_dm)/60.0 << " minutes" << endl << endl; 
+
+
+	
+		outfile << "DENSITY_MATRIX" << endl;
+		
+		for(int i = 0; i < n_dm; i++)
+		{
+			for(int j = 0; j < n_dm; j++)
+				outfile << fixed << setprecision(24) << denm(i,j) << "\t";
+			outfile << endl;
+		}	
+
+//	}
+	
+	outfile.close();
+
+	return 0;
+}
